@@ -95,49 +95,43 @@ version: 2.1
 ##            - hold
 ## This config was automatically generated from your source code
 ## Stacks detected: deps:python:.,file:setup.py:.
+
 orbs:
-  python: circleci/python@2
+  # The python orb contains a set of prepackaged circleci configuration you can use repeatedly in your configurations files
+  # Orb commands and jobs help you with common scripting around a language/tool
+  # so you dont have to copy and paste it everywhere.
+  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
+  python: circleci/python@2.1.1
+
+workflows:
+  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
+    # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
+    jobs:
+      - build-and-test
+
+
 jobs:
-  test-python:
-    # Install dependencies and run tests
+  build-and-test: # This is the name of the job, feel free to change it to better match what you're trying to do!
+    # These next lines defines a docker executors: https://circleci.com/docs/2.0/executor-types/
+    # You can specify an image from dockerhub or use one of the convenience images from CircleCI's Developer Hub
+    # A list of available CircleCI docker convenience images are available here: https://circleci.com/developer/images/image/cimg/python
+    # The executor is the environment in which the steps below will be executed - below will use a python 3.9 container
+    # Change the version below to your required version of python
     docker:
-      - image: cimg/python:3.8-node
+      - image: cimg/python:3.10.5
+    # Checkout the code as the first step. This is a dedicated CircleCI step.
+    # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
+    # Here we're making sure we use just use the system-wide pip. By default it uses the project root's requirements.txt.
+    # Then run your tests!
+    # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
       - python/install-packages:
-          pkg-manager: pip-dist
+          pkg-manager: pip
+          # app-dir: ~/project/package-directory/  # If your requirements.txt isn't in the root directory.
+          # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
-          command: source ./venv/bin/activate && pytest -s
-          name: Test rag unit tests
-      - store_test_results:
-          path: junit.xml
-  build-package:
-    # build python package
-    docker:
-      - image: cimg/python:3.8-node
-    steps:
-      - checkout
-      - run:
-          name: Create the ~/artifacts directory if it doesn't exist
-          command: mkdir -p ~/artifacts
-      - python/dist
-      - store_artifacts:
-          path: dist
-          destination: ~/artifacts
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
-workflows:
-  build-and-test:
-    jobs:
-      - test-python:
-          context: rag-context  # This contains environment variables (https://circleci.com/docs/contexts/)
-      - build-package:
-          requires:
-            - test-python
+          name: Run tests
+          # This assumes pytest is installed via the install-package step above
+          command: pytest -s
