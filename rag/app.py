@@ -4,11 +4,9 @@ from flask import Flask, jsonify, make_response, request
 # Custom libs
 import chains
 
-
 # Initialize the application chain
 # chain = chains.assistant_chain("Bob").getChain()
 chain = chains.DocumentationChain("https://docs.smith.langchain.com").get_chain()
-
 
 app = Flask(__name__)
 

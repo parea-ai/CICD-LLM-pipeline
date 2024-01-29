@@ -128,12 +128,12 @@ class DocumentationChain:
 
 def run_chain(chain, question: str, target: str, run_eval: bool = True, verbose: bool = False) -> str:
     """
-    Run the chain with the question and target answer and optionally run evals
-    :param verbose:
+    Run the chain with the question and target answer and run evals in background thread.
     :param chain:
     :param question: question to ask
     :param target: target answer
     :param run_eval: whether to run evals
+    :param verbose: whether to print verbose logs
 
     :return: str
     """

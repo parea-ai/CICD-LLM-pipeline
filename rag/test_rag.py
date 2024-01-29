@@ -6,8 +6,7 @@ import pytest
 # Custom libs
 import chains
 
-# Define test set with example questions and expected outputs for qa
-# evaluators in LangSmith.
+# Define test set with example questions and expected outputs for evals
 EXAMPLES = [
     (
         "what is langchain?",
@@ -50,14 +49,9 @@ EXAMPLES = [
 
 # =================== SETUP =================== #
 
-# In pytest, fixtures are reusable chunks of text that can be initialized
-# before different unit tests.
-
 @pytest.fixture
 def retriever():
-    retriever = chains.DocumentRetriever().get_retriever()
-
-    return retriever
+    return chains.DocumentRetriever().get_retriever()
 
 
 @pytest.fixture
@@ -76,7 +70,6 @@ def chain_2(retriever):
 # =================== TESTS =================== #
 
 
-# This test uses the chain_1 fixture
 def test_name(chain_1):
     print("\n\n==== test: test_name ====")
 
@@ -115,5 +108,5 @@ def test_llm_evaluators_experiment(chain_2):
     )
     e.run()
     avg = e.experiment_stats.cumulative_avg_score()
-    print("Average Cumulative score: " + str(avg))
+    print("Average Cumulative score: " + f"{avg:.2f}")
     assert avg > 0.5
