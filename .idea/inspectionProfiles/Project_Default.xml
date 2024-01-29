@@ -1,0 +1,33 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyArgumentEqualDefaultInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyMissingTypeHintsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="11">
+            <item index="0" class="java.lang.String" itemvalue="parea" />
+            <item index="1" class="java.lang.String" itemvalue="fsspec" />
+            <item index="2" class="java.lang.String" itemvalue="pep517" />
+            <item index="3" class="java.lang.String" itemvalue="pip-api" />
+            <item index="4" class="java.lang.String" itemvalue="docopt" />
+            <item index="5" class="java.lang.String" itemvalue="yarg" />
+            <item index="6" class="java.lang.String" itemvalue="requirementslib" />
+            <item index="7" class="java.lang.String" itemvalue="pip" />
+            <item index="8" class="java.lang.String" itemvalue="pipreqs" />
+            <item index="9" class="java.lang.String" itemvalue="cerberus" />
+            <item index="10" class="java.lang.String" itemvalue="plette" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="str.in_" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

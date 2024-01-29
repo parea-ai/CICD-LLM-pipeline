@@ -1,0 +1,14 @@
+pytest==7.4.2
+pytest-asyncio==0.21.1
+anthropic==0.5.0
+openai==0.28.1
+langchain_core==0.1.17
+langsmith==0.0.84
+langchain
+GitPython==3.1.41
+chromadb==0.4.14
+lxml==4.9.3
+html2text==2020.1.16
+bs4==0.0.1
+Flask==3.0.0
+parea-ai==0.2.40a1
