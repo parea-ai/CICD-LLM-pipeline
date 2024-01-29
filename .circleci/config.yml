@@ -69,7 +69,7 @@ workflows:
           filters:
             branches:
               only:
-                - rag-pipeline # Only run the job when this branch is updated
+                - main # Only run the job when this branch is updated
 # For use in part 2 of the tutorial - uncomment to use
 # See https://circleci.com/blog/deploy-reevaluate-llm-apps-langsmith/
 #  deployment-tests:
