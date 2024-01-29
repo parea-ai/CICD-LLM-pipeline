@@ -1,9 +1,6 @@
 # pylint: disable=redefined-outer-name,missing-module-docstring,missing-function-docstring
-
-# Third Party libs
 import pytest
 
-# Custom libs
 import chains
 
 # Define test set with example questions and expected outputs for evals
