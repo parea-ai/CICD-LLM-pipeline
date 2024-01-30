@@ -31,7 +31,7 @@ jobs:
       - check-python  # Invoke command "check-python" after entering venv
       - run:
           command: source ./venv/bin/activate && pytest -s
-          name: Test rag unit tests
+          name: Test rag unit-tests
 # For use in part 2 of the tutorial - uncomment to use
 # See https://circleci.com/blog/deploy-reevaluate-llm-apps-langsmith/
 #  run-nightly-tests:
