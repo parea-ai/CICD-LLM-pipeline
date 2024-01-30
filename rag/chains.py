@@ -2,6 +2,7 @@
 import os
 from datetime import datetime
 from operator import itemgetter
+from typing import Optional
 
 # Third Party libs
 from dotenv import load_dotenv
@@ -126,7 +127,7 @@ class DocumentationChain:
         return self.chain
 
 
-def run_chain(chain, question: str, target: str, run_eval: bool = True, verbose: bool = False) -> str:
+def run_chain(chain, question: str, target: Optional[str] = None, run_eval: bool = True, verbose: bool = False) -> str:
     """
     Run the chain with the question and target answer and run evals in background thread.
     :param chain:

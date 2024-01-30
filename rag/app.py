@@ -5,8 +5,9 @@ from flask import Flask, jsonify, make_response, request
 import chains
 
 # Initialize the application chain
-# chain = chains.assistant_chain("Bob").getChain()
-chain = chains.DocumentationChain("https://docs.smith.langchain.com").get_chain()
+# chain = chains.assistant_chain("Bob")
+retriever = chains.DocumentRetriever().get_retriever()
+chain = chains.DocumentationChain(retriever)
 
 app = Flask(__name__)
 
@@ -28,7 +29,7 @@ def chat():
     try:
         data = request.json
         user_input = data["message"]
-        result = chain.invoke({"question": user_input})
+        result = chains.run_chain(chain=chain, question=user_input, run_eval=False)
 
         return jsonify({"success": True, "data": result})
     except:  # pylint: disable=bare-except
