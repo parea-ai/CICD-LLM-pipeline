@@ -22,6 +22,8 @@ parea-ai = "^0.2.45"
 isort = {extras = ["colors"], version = "^5.13.2"}
 darglint = "^1.8.1"
 black = "^24.1.1"
+langchain-community = "^0.0.16"
+langchain-openai = "^0.0.5"
 
 [build-system]
 requires = ["poetry-core"]

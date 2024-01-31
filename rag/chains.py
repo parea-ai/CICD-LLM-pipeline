@@ -1,24 +1,17 @@
-# Std libs
 from typing import Optional
 
 import os
 from datetime import datetime
 from operator import itemgetter
 
-# Third Party libs
 from dotenv import load_dotenv
-
-# LangChain libs
-from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import RecursiveUrlLoader
-from langchain.document_transformers import Html2TextTransformer
-from langchain.embeddings import OpenAIEmbeddings
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.text_splitter import TokenTextSplitter
-from langchain.vectorstores import Chroma
-
-# Parea libs
+from langchain_community.document_loaders import RecursiveUrlLoader
+from langchain_community.document_transformers import Html2TextTransformer
+from langchain_community.vectorstores import Chroma
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from parea import Parea
 from parea.evals.rag import percent_target_supported_by_context_factory
 from parea.evals.utils import EvalFuncTuple, run_evals_in_thread_and_log

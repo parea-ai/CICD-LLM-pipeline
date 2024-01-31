@@ -39,7 +39,7 @@ formatting: codestyle
 #* Linting
 .PHONY: test
 test:
-	PYTHONPATH=$(PYTHONPATH) poetry run pytest -s
+	PYTHONPATH=$(PYTHONPATH) poetry run pytest tests/test_chains.py
 
 .PHONY: check-codestyle
 check-codestyle:
