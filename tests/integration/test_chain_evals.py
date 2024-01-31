@@ -1,7 +1,11 @@
 # pylint: disable=redefined-outer-name,missing-module-docstring,missing-function-docstring
-import pytest
+import os
 
-from rag.chain_evals import p, run_chain
+import pytest
+from dotenv import load_dotenv
+from parea import Parea
+
+from rag.chain_evals import run_chain
 from rag.chains import DocumentationChain, DocumentRetriever
 
 # Define test set with example questions and expected outputs for evals
@@ -49,6 +53,13 @@ EXAMPLES = [
 
 
 @pytest.fixture
+def parea():
+    load_dotenv()
+    p = Parea(api_key=os.getenv("PAREA_API_KEY"))
+    return p
+
+
+@pytest.fixture
 def retriever():
     return DocumentRetriever().get_retriever()
 
@@ -64,9 +75,9 @@ def chain_2(retriever):
 # =================== TESTS =================== #
 
 
-def test_llm_evaluators_experiment(chain_2):
+def test_llm_evaluators_experiment(chain_2, parea):
     print("\n\n==== test: test_llm_evaluators ====")
-    e = p.experiment(
+    e = parea.experiment(
         name="test_llm_evaluators_experiment",
         data=[
             {"chain": chain_2, "question": question, "target": target}
