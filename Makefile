@@ -39,13 +39,17 @@ codestyle:
 formatting: codestyle
 
 #* Linting
-.PHONY: test
-test:
-	PYTHONPATH=$(PYTHONPATH) poetry run pytest tests/test_chains.py
+.PHONY: unit-test
+unit-test:
+	PYTHONPATH=$(PYTHONPATH) poetry run pytest tests/unit/test_chains.py
+
+.PHONY: integration-test
+integration-test:
+	PYTHONPATH=$(PYTHONPATH) poetry run pytest tests/integration/test_chain_evals.py
 
 .PHONY: check-codestyle
 check-codestyle:
-	poetry run ruff check --diff --config pyproject.toml ./
+	poetry run ruff check --diff --output-format=github --config pyproject.toml ./
 	poetry run ruff format --check --diff --config pyproject.toml ./
 #	poetry run isort --diff --check-only --settings-path pyproject.toml ./
 #	poetry run black --diff --check --config pyproject.toml ./
@@ -56,7 +60,7 @@ mypy:
 	poetry run mypy --config-file pyproject.toml ./
 
 .PHONY: lint
-lint: test check-codestyle mypy
+lint: unit-test check-codestyle mypy
 
 .PHONY: update-dev-deps
 update-dev-deps:

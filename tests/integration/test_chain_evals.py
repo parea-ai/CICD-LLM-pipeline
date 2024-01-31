@@ -68,7 +68,10 @@ def test_llm_evaluators_experiment(chain_2):
     print("\n\n==== test: test_llm_evaluators ====")
     e = p.experiment(
         name="test_llm_evaluators_experiment",
-        data=[{"chain": chain_2, "question": question, "target": target} for question, target in EXAMPLES],
+        data=[
+            {"chain": chain_2, "question": question, "target": target}
+            for question, target in EXAMPLES
+        ],
         func=run_chain,
     )
     e.run()
