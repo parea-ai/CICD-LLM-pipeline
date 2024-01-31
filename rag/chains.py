@@ -29,7 +29,11 @@ class AssistantChain:
                 ("human", human_template),
             ]
         )
-        self.chain = chat_prompt | ChatOpenAI(model="gpt-3.5-turbo", temperature=0) | StrOutputParser()
+        self.chain = (
+            chat_prompt
+            | ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+            | StrOutputParser()
+        )
 
     def get_chain(self):
         return self.chain

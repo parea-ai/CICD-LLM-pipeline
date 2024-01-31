@@ -40,7 +40,9 @@ def run_chain(
     """
     # Init Tracer which will send logs to Parea AI
     parea_tracer = PareaAILangchainTracer()
-    response = chain.get_chain().invoke({"question": question}, config={"callbacks": [parea_tracer]})
+    response = chain.get_chain().invoke(
+        {"question": question}, config={"callbacks": [parea_tracer]}
+    )
     trace_id = parea_tracer.get_parent_trace_id()
     if run_eval:
         log = Log(
@@ -49,6 +51,8 @@ def run_chain(
             output=response,
             target=target,
         )
-        run_evals_in_thread_and_log(trace_id=str(trace_id), log=log, eval_funcs=EVALS, verbose=verbose)
+        run_evals_in_thread_and_log(
+            trace_id=str(trace_id), log=log, eval_funcs=EVALS, verbose=verbose
+        )
 
     return response
