@@ -21,6 +21,7 @@ bs4 = "^0.0.2"
 parea-ai = "^0.2.45"
 isort = {extras = ["colors"], version = "^5.13.2"}
 darglint = "^1.8.1"
+black = "^24.1.1"
 
 [build-system]
 requires = ["poetry-core"]
