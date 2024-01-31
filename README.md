@@ -41,7 +41,7 @@ To build your LLM and set up automated testing, you’ll need the following fram
 ## Pytest
 
 ```bash
-pytest -s
+poetry run pytest -s
 ``` 
 
 or

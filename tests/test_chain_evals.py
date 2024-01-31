@@ -1,7 +1,8 @@
 # pylint: disable=redefined-outer-name,missing-module-docstring,missing-function-docstring
 import pytest
 
-from rag import chains
+from rag.chain_evals import p, run_chain
+from rag.chains import DocumentationChain, DocumentRetriever
 
 # Define test set with example questions and expected outputs for evals
 EXAMPLES = [
@@ -49,12 +50,12 @@ EXAMPLES = [
 
 @pytest.fixture
 def retriever():
-    return chains.DocumentRetriever().get_retriever()
+    return DocumentRetriever().get_retriever()
 
 
 @pytest.fixture
 def chain_2(retriever):
-    return chains.DocumentationChain(retriever)
+    return DocumentationChain(retriever)
 
 
 # ============================================= #
@@ -65,10 +66,10 @@ def chain_2(retriever):
 
 def test_llm_evaluators_experiment(chain_2):
     print("\n\n==== test: test_llm_evaluators ====")
-    e = chains.p.experiment(
+    e = p.experiment(
         name="test_llm_evaluators_experiment",
         data=[{"chain": chain_2, "question": question, "target": target} for question, target in EXAMPLES],
-        func=chains.run_chain,
+        func=run_chain,
     )
     e.run()
     avg = e.experiment_stats.cumulative_avg_score()
