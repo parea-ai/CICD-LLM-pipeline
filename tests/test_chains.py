@@ -46,6 +46,7 @@ EXAMPLES = [
 
 # =================== SETUP =================== #
 
+
 @pytest.fixture
 def retriever():
     return chains.DocumentRetriever().get_retriever()
@@ -97,11 +98,8 @@ def test_llm_evaluators_experiment(chain_2):
     print("\n\n==== test: test_llm_evaluators ====")
     e = chains.p.experiment(
         name="test_llm_evaluators_experiment",
-        data=[
-            {"chain": chain_2, "question": question, "target": target}
-            for question, target in EXAMPLES
-        ],
-        func=chains.run_chain
+        data=[{"chain": chain_2, "question": question, "target": target} for question, target in EXAMPLES],
+        func=chains.run_chain,
     )
     e.run()
     avg = e.experiment_stats.cumulative_avg_score()

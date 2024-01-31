@@ -1,11 +1,13 @@
 # Std libs
+from typing import Optional
+
 import os
 from datetime import datetime
 from operator import itemgetter
-from typing import Optional
 
 # Third Party libs
 from dotenv import load_dotenv
+
 # LangChain libs
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import RecursiveUrlLoader
@@ -15,6 +17,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.text_splitter import TokenTextSplitter
 from langchain.vectorstores import Chroma
+
 # Parea libs
 from parea import Parea
 from parea.evals.rag import percent_target_supported_by_context_factory
@@ -53,11 +56,7 @@ class AssistantChain:
                 ("human", human_template),
             ]
         )
-        self.chain = (
-                chat_prompt
-                | ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
-                | StrOutputParser()
-        )
+        self.chain = chat_prompt | ChatOpenAI(model="gpt-3.5-turbo", temperature=0) | StrOutputParser()
 
     def get_chain(self):
         return self.chain
@@ -110,8 +109,10 @@ class DocumentationChain:
 
         # The runnable map here routes the original inputs to a context
         # and a question dictionary to pass to the response generator
-        self.chain = {"context": itemgetter("question") | retriever | self._format_docs,
-                      "question": itemgetter("question")} | response_generator
+        self.chain = {
+            "context": itemgetter("question") | retriever | self._format_docs,
+            "question": itemgetter("question"),
+        } | response_generator
 
     def get_context(self) -> str:
         """Helper to get the context from a retrieval chain, so we can use it for evaluation metrics."""
@@ -127,7 +128,13 @@ class DocumentationChain:
         return self.chain
 
 
-def run_chain(chain, question: str, target: Optional[str] = None, run_eval: bool = True, verbose: bool = False) -> str:
+def run_chain(
+    chain,
+    question: str,
+    target: Optional[str] = None,
+    run_eval: bool = True,
+    verbose: bool = False,
+) -> str:
     """
     Run the chain with the question and target answer and run evals in background thread.
     :param chain:
@@ -147,8 +154,6 @@ def run_chain(chain, question: str, target: Optional[str] = None, run_eval: bool
             output=response,
             target=target,
         )
-        run_evals_in_thread_and_log(
-            trace_id=str(trace_id), log=log, eval_funcs=EVALS, verbose=verbose
-        )
+        run_evals_in_thread_and_log(trace_id=str(trace_id), log=log, eval_funcs=EVALS, verbose=verbose)
 
     return response
