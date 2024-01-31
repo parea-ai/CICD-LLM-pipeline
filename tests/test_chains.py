@@ -1,7 +1,7 @@
 # pylint: disable=redefined-outer-name,missing-module-docstring,missing-function-docstring
 import pytest
 
-import chains
+from rag import chains
 
 # Define test set with example questions and expected outputs for evals
 EXAMPLES = [
