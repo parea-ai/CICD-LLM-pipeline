@@ -4,7 +4,6 @@ PYTHON := python3
 PYTHONPATH := `pwd`
 
 #* Docker variables
-IMAGE := parea
 VERSION := latest
 
 #* Poetry
