@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  python: circleci/python@2.0.3
+
 # Define custom commands for this config
 # See https://circleci.com/docs/reusing-config/#authoring-reusable-commands
 commands:
@@ -13,7 +17,10 @@ commands:
   install-venv:
     steps:
       - run:
-          command: python3 -m venv ./venv && source ./venv/bin/activate && pip3 install -r requirements.txt
+          command: |
+            python3 -m venv ./venv 
+            source ./venv/bin/activate 
+            pip3 install -r requirements.txt
           name: Enter virtual env and install dependencies
 
 
@@ -21,16 +28,13 @@ commands:
 # See: https://circleci.com/docs/jobs-steps/
 jobs:
   run-unit-tests:
-    machine: # Executor type
-      # For a full list of Linux VM execution environments, see
-      # https://circleci.com/developer/images?imageType=machine
-      image: ubuntu-2204:2023.07.2
+    executor: python/default # use the default executor defined within the orb
     steps:
-      - checkout      # Check out the code in the project directory
-      - install-venv
-      - check-python  # Invoke command "check-python" after entering venv
+      - checkout   # Check out the code in the project directory
+      - python/install-packages:
+          pkg-manager: pip
       - run:
-          command: source ./venv/bin/activate && pytest -s
+          command: python -m pytest -s
           name: Test rag unit tests
 # For use in part 2 of the tutorial - uncomment to use
 # See https://circleci.com/blog/deploy-reevaluate-llm-apps-langsmith/
@@ -65,10 +69,10 @@ workflows:
     jobs:
       - run-unit-tests:
           context: rag-context  # This contains environment variables (https://circleci.com/docs/contexts/)
-          filters:
-            branches:
-              only:
-                - rag-pipeline # Only run the job when this branch is updated
+#          filters:
+#            branches:
+#              only:
+#                - rag-pipeline # Only run the job when this branch is updated
 # For use in part 2 of the tutorial - uncomment to use
 # See https://circleci.com/blog/deploy-reevaluate-llm-apps-langsmith/
 #  deployment-tests:

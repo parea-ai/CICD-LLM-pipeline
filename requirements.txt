@@ -11,4 +11,4 @@ lxml==4.9.3
 html2text==2020.1.16
 bs4==0.0.1
 Flask==3.0.0
-parea-ai==0.2.40a1
+parea-ai==0.2.45
