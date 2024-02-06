@@ -26,18 +26,11 @@ repos:
         args: [ --fix ]
       - id: ruff-format
 
-#  - repo: local
-#    hooks:
-#      - id: isort
-#        name: isort
-#        entry: poetry run isort --settings-path pyproject.toml
-#        types: [ python ]
-#        language: system
-#
-#  - repo: local
-#    hooks:
-#      - id: black
-#        name: black
-#        entry: poetry run black --config pyproject.toml
-#        types: [ python ]
-#        language: system
+  - repo: local
+    hooks:
+      - id: pytest
+        name: unit-tests
+        entry: poetry run pytest tests/unit/test_chains.py
+        language: system
+        pass_filenames: false
+        always_run: true
