@@ -30,8 +30,6 @@ pre-commit-install:
 .PHONY: codestyle
 codestyle:
 	poetry run pyupgrade --exit-zero-even-if-changed --py39-plus **/*.py
-#	poetry run isort --settings-path pyproject.toml ./
-#	poetry run black --config pyproject.toml ./
 	poetry run ruff check --fix
 	poetry run ruff format
 
@@ -51,8 +49,6 @@ integration-test:
 check-codestyle:
 	poetry run ruff check --diff --output-format=github --config pyproject.toml ./
 	poetry run ruff format --check --diff --config pyproject.toml ./
-#	poetry run isort --diff --check-only --settings-path pyproject.toml ./
-#	poetry run black --diff --check --config pyproject.toml ./
 	poetry run darglint --verbosity 2 parea tests
 
 .PHONY: mypy
